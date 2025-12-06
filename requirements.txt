@@ -1,0 +1,5 @@
+atproto
+python-frontmatter
+click
+requests
+pillow
