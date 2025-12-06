@@ -1,0 +1,44 @@
+name: 'Blue collective'
+
+description: 'Draft and review Bluesky posts together using GitHub'
+
+inputs:
+  posts-directory:
+    description: 'look in this subdirectory for new posts'
+    required: true
+  dry-run:
+    description: 'only test limits, do not publish anything'
+    required: false
+    default: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.14"
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v7
+      with:
+        enable-cache: false
+
+    - name: Install dependencies
+      run: |
+        uv venv venv
+        source venv/bin/activate
+        uv pip install -r "${{ github.action_path }}/requirements.txt"
+      shell: bash
+
+    - name: Run script
+      run: |
+        source venv/bin/activate
+        python "${{ github.action_path }}/src/main.py" \
+            --default-branch ${{ github.event.repository.default_branch }} \
+            --dry-run ${DRY_RUN} \
+            --posts-directory ${POSTS_DIRECTORY}
+      shell: bash
+      env:
+        DRY_RUN: ${{ inputs.dry-run }}
+        POSTS_DIRECTORY: ${{ inputs.posts-directory }}
