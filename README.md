@@ -55,7 +55,7 @@ jobs:
         fetch-depth: 0  # fetch full history so all refs exist
 
     - name: Dry run (only test limits)
-      uses: bast/blue-collective@c7b50cc801da231327f172f1e76226d94d3a9300
+      uses: bast/blue-collective@b104512a0d668e3d528e9d502b4a1955c8a8a578
       with:
         posts-directory: "posts"
         dry-run: true
@@ -64,7 +64,7 @@ jobs:
       # the pull request is merged
     - name: Publish
       if: github.ref_name == github.event.repository.default_branch
-      uses: bast/blue-collective@c7b50cc801da231327f172f1e76226d94d3a9300
+      uses: bast/blue-collective@b104512a0d668e3d528e9d502b4a1955c8a8a578
       with:
         posts-directory: "posts"
       env:
@@ -247,7 +247,7 @@ To verify that this is not happening you can verify the source code.
 And by using the actual commit hash you make sure that the action cannot silently change
 without you noticing:
 ```yaml
-uses: bast/blue-collective@c7b50cc801da231327f172f1e76226d94d3a9300
+uses: bast/blue-collective@b104512a0d668e3d528e9d502b4a1955c8a8a578
 ```
 
 This also means that when updating to a later version, you can verify the code
